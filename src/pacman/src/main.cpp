@@ -85,10 +85,10 @@ int game(const unsigned & cptMax, unsigned & cpt) { //game depends of the player
                  Colors (KReset);
                  cout << "tour numero : " << TurnNum << endl << "Saisisez un déplacement : ";
                  cin >> Move;
-                 Move = toupper (Move);
+                 Move = toupper(Move);
              }
              Clear_Screen();
-             ShowMatrix (Mat);
+             ShowMatrix(Mat);
          }
 
          Colors (PGreen); //print in blue
@@ -154,16 +154,26 @@ int game(const unsigned & cptMax, unsigned & cpt) { //game depends of the player
                     }
                     srand(time(0));
                     unsigned botchoice = rand() % NBCOMMAND; // Give a radom value between 0, 1, 2 or 3
-                    botchoice = toupper (botchoice);
-                    while (!MoveBot(Mat, botchoice, car, Pos, PosPlayer1)) { //run while "MoveBot" function return false
-                        botchoice = rand() % NBCOMMAND;
-                        botchoice = toupper (botchoice);
+                    botchoice = toupper(botchoice);
+                    cout << "TurnGhost : " << TurnGhost << " choice : " << botchoice << endl;
+                    bool booleanMove;
+                    booleanMove = MoveBot(Mat, botchoice, car, Pos, PosPlayer1);
+                    while (!booleanMove) { //run while "MoveBot" function return false
+                        srand(time(0));
+                        if (botchoice == 0) {
+                            botchoice = 1;
+                        } else if (botchoice == 1) {
+                            botchoice = 0;
+                        }
+                        booleanMove = MoveBot(Mat, botchoice, car, Pos, PosPlayer1);
                     }
                     Clear_Screen();
                     ShowMatrix (Mat);
                     ++TurnGhost;
                 }
                 PosPlayer5 = Pos;
+                Clear_Screen();
+                ShowMatrix (Mat);
             }
 
             if ((PosPlayer1 == PosPlayer2) | (PosPlayer1 == PosPlayer3) | (PosPlayer1 == PosPlayer4) | (PosPlayer1 == PosPlayer5)) {

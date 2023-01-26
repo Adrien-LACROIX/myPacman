@@ -170,17 +170,17 @@ bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition &
 
    car = Mat [Pos.first][Pos.second];
    Mat [Pos.first][Pos.second] = KPoint;
-   unsigned road;
-   unsigned tryingRoad;
+   /*CPosition  Road;
+   CPosition  TryingRoad;*/
 
     srand(time(0));
 
    switch (botchoice) { //choose a direction
    case MOVEVERTICAL: //vertical direction
-       road = Posplayer1.first - Pos.first; //find the shortest road in order to eat player1
-       tryingRoad = Posplayer1.first - (Pos.first + 1);
-
-       if(tryingRoad > road){ //up
+       /*Road.first = Posplayer1.first - Pos.first; //find the shortest road in order to eat player1
+       TryingRoad.first = Posplayer1.first - (Pos.first + 1);
+       cout << "joueur : " << Posplayer1.first << " ghost : " << Pos.first << " road : " << Road.first << " try : " << TryingRoad.first << endl;*/
+       if(Pos.first > Posplayer1.first){ //up
          if (Pos.first == 0) {
              if (Mat[Pos.second].size()-1 == Kwall) {
                  Mat [Pos.first][Pos.second] = car;
@@ -205,7 +205,7 @@ bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition &
          }
          break;
        }
-       else if (tryingRoad < road){ //down
+       else if (Pos.first < Posplayer1.first){ //down
              if (Pos.first == MapY-1) {
                  if (Mat[Pos.second][0] == Kwall) {
                      Mat [Pos.first][Pos.second] = car;
@@ -236,10 +236,10 @@ bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition &
        }
 
     case MOVEHONRIZONTAL://horizontal direction
-       road = Posplayer1.second - Pos.second; //find the shortest road in order to eat player1
-       tryingRoad = Posplayer1.second - (Pos.second + 1);
-
-       if (tryingRoad > road ) { //left
+    /*   Road.second = Posplayer1.second - Pos.second; //find the shortest road in order to eat player1
+       TryingRoad.second = Posplayer1.second - (Pos.second + 1);
+       cout << "joueur : " << Posplayer1.second << " ghost : " << Pos.second << " road : " << Road.second << " try : " << TryingRoad.second << endl;*/
+       if (Pos.second > Posplayer1.second ) { //left
          if (Pos.second == 0) {
              if (Mat[Pos.first].size()-1 == Kwall) {
                  Mat [Pos.first][Pos.second] = car;
@@ -264,7 +264,7 @@ bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition &
          }
          break;
        }
-       else if (tryingRoad < road ) { //right
+       else if (Pos.second < Posplayer1.first ) { //right
            if (Pos.second == Mat[Pos.first].size()-1) {
                if (Mat[Pos.first][0] == Kwall) {
                    Mat [Pos.first][Pos.second] = car;
