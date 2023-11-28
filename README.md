@@ -10,10 +10,13 @@ PCM-[number of yout branch]
 '
 
 
+
 **Actual Version : 1.2.1**
 
 
+
 **Roadmap:**
+
 Version 1.3.1:
 - Valid the action without tap enter
 
@@ -27,6 +30,7 @@ Version 1.2.2:
 - Fix bot's bugs
 
 **Pacthnotes:**
+
 Version 1.2.1:
 - Fix bug on the bot mouvement
 - Find new bug on ghots
