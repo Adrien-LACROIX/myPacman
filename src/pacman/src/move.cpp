@@ -19,6 +19,176 @@
 using namespace std;
 
 unsigned cpt; //declare the player's point's number max
+bool PointUnderGhost;
+bool GhostXPointPos;
+bool GhostCPointPos;
+bool GhostVPointPos;
+bool GhostBPointPos;
+
+void checkIfLastPosIsAPoint(CMat & Mat, char car, CPosition & Pos) {
+    switch (car) {
+    case 'x':
+        if (GhostXPointPos) {
+            Mat [Pos.first][Pos.second] = KPoint;
+        }
+        GhostXPointPos = PointUnderGhost;
+        break;
+    case 'c':
+        if (GhostCPointPos) {
+            Mat [Pos.first][Pos.second] = KPoint;
+        }
+        GhostCPointPos = PointUnderGhost;
+        break;
+    case 'v':
+        if (GhostVPointPos) {
+            Mat [Pos.first][Pos.second] = KPoint;
+        }
+        GhostVPointPos = PointUnderGhost;
+        break;
+    case 'b':
+        if (GhostBPointPos) {
+            Mat [Pos.first][Pos.second] = KPoint;
+        }
+        GhostBPointPos = PointUnderGhost;
+        break;
+    }
+}
+
+bool moveUp(CMat & Mat, char car, CPosition & Pos) {
+    if (Pos.first == 0) {
+        if (Mat[Pos.second].size()-1 == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        }
+        else {
+            if (Mat [MapY-1][Pos.second] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [MapY-1][Pos.second] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    }
+    else {
+        if (Mat[Pos.first-1][Pos.second] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        }
+        else {
+            if (Mat [Pos.first-1][Pos.second] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [Pos.first-1][Pos.second] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    }
+}
+
+bool moveDown(CMat & Mat, char car, CPosition & Pos) {
+    if (Pos.first == MapY-1) {
+        if (Mat[Pos.second][0] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        } else {
+            if (Mat [0][Pos.second] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [0][Pos.second] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    } else {
+        if (Mat[Pos.first+1][Pos.second] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        } else {
+            if (Mat [Pos.first+1][Pos.second] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [Pos.first+1][Pos.second] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    }
+}
+
+bool moveLeft(CMat & Mat, char car, CPosition & Pos) {
+        if (Pos.second == 0) {
+            if (Mat[Pos.first].size()-1 == Kwall) {
+                Mat [Pos.first][Pos.second] = car;
+                return false;
+            }
+            else {
+                if (Mat [Pos.first][MapX-1] == KPoint) {
+                    PointUnderGhost = true;
+                } else {
+                    PointUnderGhost = false;
+                }
+                Mat [Pos.first][MapX-1] = car;
+                checkIfLastPosIsAPoint(Mat, car, Pos);
+                return true;
+            }
+        }
+        else {
+            if (Mat[Pos.first][Pos.second-1] == Kwall) {
+                Mat [Pos.first][Pos.second] = car;
+                return false;
+            }
+            else {
+                if (Mat [Pos.first][Pos.second-1] == KPoint) {
+                    PointUnderGhost = true;
+                } else {
+                    PointUnderGhost = false;
+                }
+                Mat [Pos.first][Pos.second-1] = car;
+                checkIfLastPosIsAPoint(Mat, car, Pos);
+                return true;
+            }
+        }
+}
+
+bool moveRight(CMat & Mat, char car, CPosition & Pos) {
+    if (Pos.second == Mat[Pos.first].size()-1) {
+        if (Mat[Pos.first][0] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        }
+        else {
+            if (Mat [Pos.first][0] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [Pos.first][0] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    } else {
+        if (Mat[Pos.first][Pos.second+1] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return false;
+        }
+        else {
+            if (Mat [Pos.first][Pos.second+1] == KPoint) {
+                PointUnderGhost = true;
+            } else {
+                PointUnderGhost = false;
+            }
+            Mat [Pos.first][Pos.second+1] = car;
+            checkIfLastPosIsAPoint(Mat, car, Pos);
+            return true;
+        }
+    }
+}
 
 /**
  * @brief MoveToken let the user choose his move
@@ -168,185 +338,281 @@ bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition &
     # define MOVEHONRIZONTAL    1
     # define NBCOMMAND          2
 
-   car = Mat [Pos.first][Pos.second];
-   Mat [Pos.first][Pos.second] = KPoint;
-   /*CPosition  Road;
-   CPosition  TryingRoad;*/
-
+    bool success;
+    car = Mat [Pos.first][Pos.second];
     srand(time(0));
 
-   switch (botchoice) { //choose a direction
-   case MOVEVERTICAL: //vertical direction
-       /*Road.first = Posplayer1.first - Pos.first; //find the shortest road in order to eat player1
-       TryingRoad.first = Posplayer1.first - (Pos.first + 1);
-       cout << "joueur : " << Posplayer1.first << " ghost : " << Pos.first << " road : " << Road.first << " try : " << TryingRoad.first << endl;*/
-       if(Pos.first > Posplayer1.first){ //up
-         if (Pos.first == 0) {
-             if (Mat[Pos.second].size()-1 == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 Pos.first = MapY-1;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         else {
-             if (Mat[Pos.first-1][Pos.second] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 --Pos.first;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         break;
-       }
-       else if (Pos.first < Posplayer1.first){ //down
-             if (Pos.first == MapY-1) {
-                 if (Mat[Pos.second][0] == Kwall) {
-                     Mat [Pos.first][Pos.second] = car;
-                     return false;
-                 }
-                 else {
-                     Pos.first = 0;
-                     Mat [Pos.first][Pos.second] = car;
-                     return true;
-                 }
-             }
-             else {
-                 if (Mat[Pos.first+1][Pos.second] == Kwall) {
-                     Mat [Pos.first][Pos.second] = car;
-                     return false;
-                 }
-                 else {
-                     ++Pos.first;
-                     Mat [Pos.first][Pos.second] = car;
-                     return true;
-                 }
-             }
-             break;
-         }
-         else {
-           return false;
-           break;
-       }
+    switch (botchoice) { //choose a direction
+    case MOVEVERTICAL: //vertical direction
+        cout << "Try vertical mouvement" << endl;
+        if(Pos.first > Posplayer1.first){ //up
+            cout << "Ghost want to move up" << endl;
+            success = moveUp(Mat, car, Pos);
+            switch (car) {
+            case 'x':
+                if (success && GhostXPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostXPointPos = PointUnderGhost;
+                break;
+            case 'c':
+                if (success && GhostCPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostCPointPos = PointUnderGhost;
+                break;
+            case 'v':
+                if (success && GhostVPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostVPointPos = PointUnderGhost;
+                break;
+            case 'b':
+                if (success && GhostBPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostBPointPos = PointUnderGhost;
+                break;
+            }
+            return success;
+            break;
+          }
+        else if (Pos.first < Posplayer1.first){ //down
+            cout << "Ghost want to move down" << endl;
+            success = moveDown(Mat, car, Pos);
+            switch (car) {
+            case 'x':
+                if (success && GhostXPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostXPointPos = PointUnderGhost;
+                break;
+            case 'c':
+                if (success && GhostCPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostCPointPos = PointUnderGhost;
+                break;
+            case 'v':
+                if (success && GhostVPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostVPointPos = PointUnderGhost;
+                break;
+            case 'b':
+                if (success && GhostBPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostBPointPos = PointUnderGhost;
+                break;
+            }
+            return success;
+            break;
+        } else {
+            srand(time(0));
+            unsigned mouv = rand() % 2;
+            switch (mouv){
+            case 0:
+                success = moveUp(Mat, car, Pos);
+                switch (car) {
+                case 'x':
+                    if (success && GhostXPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostXPointPos = PointUnderGhost;
+                    break;
+                case 'c':
+                    if (success && GhostCPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostCPointPos = PointUnderGhost;
+                    break;
+                case 'v':
+                    if (success && GhostVPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostVPointPos = PointUnderGhost;
+                    break;
+                case 'b':
+                    if (success && GhostBPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostBPointPos = PointUnderGhost;
+                    break;
+                }
+                return success;
+                break;
+
+            case 1:
+                success = moveDown(Mat, car, Pos);
+                switch (car) {
+                case 'x':
+                    if (success && GhostXPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostXPointPos = PointUnderGhost;
+                    break;
+                case 'c':
+                    if (success && GhostCPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostCPointPos = PointUnderGhost;
+                    break;
+                case 'v':
+                    if (success && GhostVPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostVPointPos = PointUnderGhost;
+                    break;
+                case 'b':
+                    if (success && GhostBPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostBPointPos = PointUnderGhost;
+                    break;
+                }
+                return success;
+                break;
+            }
+            break;
+        }
+        break;
 
     case MOVEHONRIZONTAL://horizontal direction
-    /*   Road.second = Posplayer1.second - Pos.second; //find the shortest road in order to eat player1
-       TryingRoad.second = Posplayer1.second - (Pos.second + 1);
-       cout << "joueur : " << Posplayer1.second << " ghost : " << Pos.second << " road : " << Road.second << " try : " << TryingRoad.second << endl;*/
-       if (Pos.second > Posplayer1.second ) { //left
-         if (Pos.second == 0) {
-             if (Mat[Pos.first].size()-1 == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 Pos.second = MapX-1;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
+        cout << "Try horizontal mouvement" << endl;
+        if (Pos.second > Posplayer1.second ) { //left
+            cout << "Ghost want to move left" << endl;
+            success = moveLeft(Mat, car, Pos);
+            switch (car) {
+            case 'x':
+                if (success && GhostXPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostXPointPos = PointUnderGhost;
+                break;
+            case 'c':
+                if (success && GhostCPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostCPointPos = PointUnderGhost;
+                break;
+            case 'v':
+                if (success && GhostVPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostVPointPos = PointUnderGhost;
+                break;
+            case 'b':
+                if (success && GhostBPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostBPointPos = PointUnderGhost;
+                break;
             }
-         }
-         else {
-             if (Mat[Pos.first][Pos.second-1] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 --Pos.second;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         break;
-       }
-       else if (Pos.second < Posplayer1.first ) { //right
-           if (Pos.second == Mat[Pos.first].size()-1) {
-               if (Mat[Pos.first][0] == Kwall) {
-                   Mat [Pos.first][Pos.second] = car;
-                   return false;
-               }
-               else {
-                   Pos.second = 0;
-                   Mat [Pos.first][Pos.second] = car;
-                   return true;
-              }
-           }
-           else {
-               if (Mat[Pos.first][Pos.second+1] == Kwall) {
-                   Mat [Pos.first][Pos.second] = car;
-                   return false;
-               }
-               else {
-                   ++Pos.second;
-                   Mat [Pos.first][Pos.second] = car;
-                   return true;
-               }
-           }
-           break;
-       }
-       else {
-         return false;
-         break;
-      }
-
-/*
-    case MOVEDOWN:
-         if (Pos.first == MapY-1) {
-             if (Mat[Pos.second][0] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 Pos.first = 0;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         else {
-             if (Mat[Pos.first+1][Pos.second] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 ++Pos.first;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         break;
-
-
-    case MOVERIGHT:
-         if (Pos.second == Mat[Pos.first].size()-1) {
-             if (Mat[Pos.first][0] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 Pos.second = 0;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
+            return success;
+            break;
+        }
+        else if (Pos.second < Posplayer1.first ) { //right
+            cout << "Ghost want to move right" << endl;
+            success = moveRight(Mat, car, Pos);
+            switch (car) {
+            case 'x':
+                if (success && GhostXPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostXPointPos = PointUnderGhost;
+                break;
+            case 'c':
+                if (success && GhostCPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostCPointPos = PointUnderGhost;
+                break;
+            case 'v':
+                if (success && GhostVPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostVPointPos = PointUnderGhost;
+                break;
+            case 'b':
+                if (success && GhostBPointPos) {
+                    Mat [Pos.first][Pos.second] = KPoint;
+                }
+                GhostBPointPos = PointUnderGhost;
+                break;
             }
-         }
-         else {
-             if (Mat[Pos.first][Pos.second+1] == Kwall) {
-                 Mat [Pos.first][Pos.second] = car;
-                 return false;
-             }
-             else {
-                 ++Pos.second;
-                 Mat [Pos.first][Pos.second] = car;
-                 return true;
-             }
-         }
-         break;
-         */
-   }
-   Mat [Pos.first][Pos.second] = car;
-   return 0;
+            return success;
+            break;
+        } else {
+            srand(time(0));
+            unsigned mouv = rand() % 2;
+            switch (mouv){
+            case 0:
+                success = moveLeft(Mat, car, Pos);
+                switch (car) {
+                case 'x':
+                    if (success && GhostXPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostXPointPos = PointUnderGhost;
+                    break;
+                case 'c':
+                    if (success && GhostCPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostCPointPos = PointUnderGhost;
+                    break;
+                case 'v':
+                    if (success && GhostVPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostVPointPos = PointUnderGhost;
+                    break;
+                case 'b':
+                    if (success && GhostBPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostBPointPos = PointUnderGhost;
+                    break;
+                }
+                return success;
+                break;
+
+            case 1:
+                success = moveRight(Mat, car, Pos);
+                switch (car) {
+                case 'x':
+                    if (success && GhostXPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostXPointPos = PointUnderGhost;
+                    break;
+                case 'c':
+                    if (success && GhostCPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostCPointPos = PointUnderGhost;
+                    break;
+                case 'v':
+                    if (success && GhostVPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostVPointPos = PointUnderGhost;
+                    break;
+                case 'b':
+                    if (success && GhostBPointPos) {
+                        Mat [Pos.first][Pos.second] = KPoint;
+                    }
+                    GhostBPointPos = PointUnderGhost;
+                    break;
+                }
+                return success;
+                break;
+            }
+            break;
+        }
+        break;
+    }
+    Mat [Pos.first][Pos.second] = car;
+    return 0;
 }
