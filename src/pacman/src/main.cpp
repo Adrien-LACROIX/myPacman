@@ -128,7 +128,7 @@ int game(const unsigned & cptMax, unsigned & cpt) { //game depends of the player
                 break;
             }
 
-            //Victiry test
+            //Victory test
             if (cpt == cptMax) Victory = true; //if the player's number of point and the point's number max are equals, the party is win
             else {
                 TurnGhost = 1; //set turn ghost at 1
@@ -154,17 +154,23 @@ int game(const unsigned & cptMax, unsigned & cpt) { //game depends of the player
                     }
                     srand(time(0));
                     unsigned botchoice = rand() % NBCOMMAND; // Give a radom value between 0, 1, 2 or 3
-                    botchoice = toupper(botchoice);
-                    cout << "TurnGhost : " << TurnGhost << " choice : " << botchoice << endl;
+                    //botchoice = toupper(botchoice);
                     bool booleanMove;
                     booleanMove = MoveBot(Mat, botchoice, car, Pos, PosPlayer1);
                     while (!booleanMove) { //run while "MoveBot" function return false
                         srand(time(0));
                         if (botchoice == 0) {
+                            cout << "Vertical mouvement fail" << endl;
                             botchoice = 1;
-                        } else if (botchoice == 1) {
-                            botchoice = 0;
+                            cout << "TurnGhost : " << TurnGhost << " choice : " << botchoice << endl;
+                        } else {
+                            if (botchoice == 1) {
+                                cout << "Horizontal mouvement fail" << endl;
+                                botchoice = 0;
+                                cout << "TurnGhost : " << TurnGhost << " choice : " << botchoice << endl;
+                            }
                         }
+                        cout << "Run it" << endl;
                         booleanMove = MoveBot(Mat, botchoice, car, Pos, PosPlayer1);
                     }
                     Clear_Screen();
