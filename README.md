@@ -10,34 +10,34 @@ PCM-[number of yout branch]
 '
 
 
-Actual Version : 1.2.1
+**Actual Version : 1.2.1**
 
 
-**__Roadmap:__**
-__Version 1.3.1:__
+**Roadmap:**
+Version 1.3.1:
 - Valid the action without tap enter
 
-__Version 1.3.0:__
+Version 1.3.0:
 - Add possibility to change keys configuration
 
-__Version 1.2.3:__
+Version 1.2.3:
 - Fix bug when player enter in a false wall in order to take an easterEgg
 
-__Version 1.2.2:__
+Version 1.2.2:
 - Fix bot's bugs
 
-**__Pacthnotes:__**
-__Version 1.2.1:__
+**Pacthnotes:**
+Version 1.2.1:
 - Fix bug on the bot mouvement
 - Find new bug on ghots
 - Find New bug when player enter in a false wall in order to take an easterEgg
 
-__Version 1.2.0:__
+Version 1.2.0:
 - Adding smart bot movement
 
-__Version 1.1.0: __
+Version 1.1.0:
 - Adding Ester Eggs
 
-__Version 1.0.0:__
-First complete version of the game
+Version 1.0.0:
+- First complete version of the game
 
