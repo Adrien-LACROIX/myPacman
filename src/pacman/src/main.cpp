@@ -22,6 +22,8 @@
 #include "src/pacman/src/map.cpp"
 #include "src/pacman/src/move.cpp"
 #include "src/pacman/src/EasterEggs.cpp"
+#include "src/pacman/src/game.cpp"
+#include "src/pacman/src/class.cpp"
 
 using namespace std;
 
