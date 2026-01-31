@@ -2,8 +2,8 @@
  * \file class.cpp
  * \define all classes
  * \author Adrien Lacroix
- * \version 1.0
- * \date 30th January 2026
+ * \version 1.1
+ * \date 31th January 2026
  */
 
 #include "src/pacman/headers/Doc_Prof/type.h"

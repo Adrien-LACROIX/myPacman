@@ -1,14 +1,14 @@
 
 /**
- * \file mobe.cpp
+ * \file move.cpp
  * \make the mouvements
  * \author Adrien Lacroix
  * \author Constant Lacroix
  * \author Oussama Talbi
  * \author Thomas Celeschi
  * \author Julian Cayuela
- * \version 1.0
- * \date 21 janvier 2021
+ * \version 2.0
+ * \date 31th January 2026
  */
 
 #include "src/pacman/headers/Doc_Prof/type.h"

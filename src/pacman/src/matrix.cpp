@@ -1,15 +1,13 @@
 /**
  * \file map.cpp
  * \make the map
- * \author Alain Casali
- * \author Marc Laporte
  * \author Adrien Lacroix
  * \author Constant Alberola
  * \author Oussama Talbi
  * \author Thomas Celeschi
  * \author Julian Cayuela
- * \version 1.1
- * \date 4 mai 2021
+ * \version 2.0
+ * \date 31th January 2026
  */
 
 #ifdef _WIN32
