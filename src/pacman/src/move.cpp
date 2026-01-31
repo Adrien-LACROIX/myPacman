@@ -11,21 +11,17 @@
  * \date 21 janvier 2021
  */
 
-#include <iostream>
-#include <vector>
 #include "src/pacman/headers/Doc_Prof/type.h"
 #include "src/pacman/headers/models.h"
 
 using namespace std;
 
-unsigned cpt; //declare the player's point's number max
-bool PointUnderGhost;
-bool GhostXPointPos;
-bool GhostCPointPos;
-bool GhostVPointPos;
-bool GhostBPointPos;
+class Movement {
+    public :
+        bool success, pointOnPos;
+}
 
-bool PointOnNextPos (CMat & Mat, char car, CPosition & Pos) {
+bool PointOnNextPos (CMat & Mat, CPosition & Pos) {
     if Mat[Pos.first][Pos.second] = KPoint {
         return true;
     } else {
@@ -33,98 +29,110 @@ bool PointOnNextPos (CMat & Mat, char car, CPosition & Pos) {
     }
 }
 
-bool moveUp(CMat & Mat, char car, CPosition & Pos) {
+Movement moveUp(CMat & Mat, char car, CPosition & Pos) {
+    bool pointOnNextPos;
     if (Pos.first == 0) {
         if (Mat[Pos.second].size()-1 == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         }
         else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             Pos.first = MapY-1;
             Mat [MapY-1][Pos.second] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     }
     else {
         if (Mat[Pos.first-1][Pos.second] == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         }
         else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             --Pos.first;
             Mat [Pos.first-1][Pos.second] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     }
 }
 
-bool moveDown(CMat & Mat, char car, CPosition & Pos) {
+Movement moveDown(CMat & Mat, char car, CPosition & Pos) {
+    bool pointOnNextPos;
     if (Pos.first == MapY-1) {
         if (Mat[Pos.second][0] == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         } else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             Pos.first = 0;
             Mat [0][Pos.second] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     } else {
         if (Mat[Pos.first+1][Pos.second] == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         } else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             ++Pos.first
             Mat [Pos.first+1][Pos.second] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     }
 }
 
-bool moveLeft(CMat & Mat, char car, CPosition & Pos) {
-        if (Pos.second == 0) {
-            if (Mat[Pos.first].size()-1 == Kwall) {
-                Mat [Pos.first][Pos.second] = car;
-                return false;
-            }
-            else {
-                Pos.second = MapX-1;
-                Mat [Pos.first][MapX-1] = car;
-                return true;
-            }
+Movement moveLeft(CMat & Mat, char car, CPosition & Pos) {
+    bool pointOnNextPos;
+    if (Pos.second == 0) {
+        if (Mat[Pos.first].size()-1 == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return Movement(false, false);
         }
         else {
-            if (Mat[Pos.first][Pos.second-1] == Kwall) {
-                Mat [Pos.first][Pos.second] = car;
-                return false;
-            }
-            else {
-                --Pos.second;
-                Mat [Pos.first][Pos.second-1] = car;
-                return true;
-            }
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
+            Pos.second = MapX-1;
+            Mat [Pos.first][MapX-1] = car;
+            return Movement(true, pointOnNextPos);
         }
+    }
+    else {
+        if (Mat[Pos.first][Pos.second-1] == Kwall) {
+            Mat [Pos.first][Pos.second] = car;
+            return Movement(false, false);
+        }
+        else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
+            --Pos.second;
+            Mat [Pos.first][Pos.second-1] = car;
+            return Movement(true, pointOnNextPos);
+        }
+    }
 }
 
-bool moveRight(CMat & Mat, char car, CPosition & Pos) {
+Movement moveRight(CMat & Mat, char car, CPosition & Pos) {
+    bool pointOnNextPos;
     if (Pos.second == Mat[Pos.first].size()-1) {
         if (Mat[Pos.first][0] == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         }
         else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             Pos.second = 0;
             Mat [Pos.first][0] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     } else {
         if (Mat[Pos.first][Pos.second+1] == Kwall) {
             Mat [Pos.first][Pos.second] = car;
-            return false;
+            return Movement(false, false);
         }
         else {
+            pointOnNextPos = PointOnNextPos(Mat, Pos);
             ++Pos.second.
             Mat [Pos.first][Pos.second+1] = car;
-            return true;
+            return Movement(true, pointOnNextPos);
         }
     }
 }

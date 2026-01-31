@@ -6,57 +6,76 @@
  * \date 30th January 2026
  */
 
- #include "src/pacman/headers/Doc_Prof/type.h"
-#include <iostream>
-#include <vector>
 #include "src/pacman/headers/Doc_Prof/type.h"
 #include "src/pacman/headers/models.h"
+#include "src/pacman/src/move.cpp"
 
 
 class Player {
     public:
-        const char car
-        CPosition Pos
+        const char car;
+        CPosition Pos;
+        CPosition lastPos;
         int cpt;
 
-        bool Move (CMat & Mat, char Move, CPosition  & Pos) {
-            char car = Mat[Pos.first][Pos.second]; //declare the variable car and set his value at the player one's position
+        bool Move (CMat & Mat, char nextMove, CPosition  & Pos) {
+            Movement movement;
+            bool returnValue;
 
-            switch (Move) {
+            lastPos = Pos;
+            car = Mat[Pos.first][Pos.second]; //set his value at the player one's position
+
+            switch (nextMove) {
             case 'Z':       //if the case 'Z' is enter
-                success = moveUp(Mat, car, Pos);
-                if (Pos.first == MapY-1) { //if the player is at the map's top
-                    Mat [0][Pos.second] = KEmpty;
+                movement = moveUp(Mat, car, Pos);
+                if (movement.success) {
+                    if (movement.pointOnPos) {
+                        ++cpt;
+                        Mat [lastPos.first][lastPos.second] = KEmpty;
+                    }
+                    returnValue = true;
                 } else {
-                    Mat [Pos.First+1][Pos.second] = KEmpty;
-                }
+                    returnValue = false:
+                } 
                 break;
 
             case 'Q':       //if the case 'Q' is enter
-                success = moveLeft(Mat, car, Pos);
-                if (Pos.first == MapX-1) { //if the player is at the map's top
-                    Mat [Pos.First][0] = KEmpty;
+                movement = moveLeft(Mat, car, Pos);
+                if (movement.success) {
+                    if (movement.pointOnPos) {
+                        cpt++;
+                        Mat [lastPos.first][lastPos.second] = KEmpty;
+                    }
+                    returnValue = true;
                 } else {
-                    Mat [Pos.First][Pos.second+1] = KEmpty;
-                }
+                    returnValue = false:
+                } 
                 break;
 
             case 'S':
-                success = moveDown(Mat, car, Pos);
-                if (Pos.first == 0) { //if the player is at the map's top
-                    Mat [MapY-1][Pos.second] = KEmpty;
+                movement = moveDown(Mat, car, Pos);
+                if (movement.success) {
+                    if (movement.pointOnPos) {
+                        cpt++;
+                        Mat [lastPos.first][lastPos.second] = KEmpty;
+                    }
+                    returnValue = true;
                 } else {
-                    Mat [Pos.First-1][Pos.second] = KEmpty;
-                }
+                    returnValue = false:
+                } 
                 break;
 
             case 'D':
-                success = moveRight(Mat, car, Pos);
-                if (Pos.first == 0) { //if the player is at the map's top
-                    Mat [Pos.First][MapX-1] = KEmpty;
+                movement = moveRight(Mat, car, Pos);
+                if (movement.success) {
+                    if (movement.pointOnPos) {
+                        cpt++;
+                        Mat [lastPos.first][lastPos.second] = KEmpty;
+                    }
+                    returnValue = true;
                 } else {
-                    Mat [Pos.First][Pos.second-1] = KEmpty;
-                }
+                    returnValue = false:
+                } 
                 break;
             }
             Mat [Posplayer1.first][Posplayer1.second] = car;
@@ -67,17 +86,21 @@ class Player {
 
 class Ghost {
     public:
-        const char car
-        CPosition Pos
-        bool pointOnPos
+        const char car;
+        CPosition Pos;
+        CPosition lastPos;
+        bool pointOnPos;
+        
 
-        bool MoveBot (CMat & Mat, char botchoice, char car, CPosition & Pos, CPosition & Posplayer1){
+        bool MoveBot (CMat & Mat, char botchoice, CPosition & Posplayer1){
 
             # define MOVEVERTICAL       0
             # define MOVEHONRIZONTAL    1
             # define NBCOMMAND          2
 
-            bool success;
+            lastPos = Pos;
+            bool returnValue;
+            Movement movement;
             car = Mat [Pos.first][Pos.second];
             srand(time(0));
 
@@ -86,52 +109,56 @@ class Ghost {
                 cout << "Try vertical mouvement" << endl;
                 if(Pos.first > Posplayer1.first){ //up
                     cout << "Ghost want to move up" << endl;
-                    success = moveUp(Mat, car, Pos);
-                    if (success && pointOnPos) {
-                        Mat [Pos.first][Pos.second] = KPoint;
+                    movement = moveUp(Mat, car, Pos);
+                    if (movement.success) {
+                        if (movement.pointOnPos) {
+                            Mat [lastPos.first][lastPos.second] = KPoint;
+                        }
+                        returnValue = true;
                     }
-                    return true;
-                    break;
                 }
                 else if (Pos.first < Posplayer1.first){ //down
                     cout << "Ghost want to move down" << endl;
-                    success = moveDown(Mat, car, Pos);
-                    if (success && pointOnPos) {
-                        Mat [Pos.first][Pos.second] = KPoint;
+                    movement = moveDown(Mat, car, Pos);
+                    if (movement.success) {
+                        if (movement.pointOnPos) {
+                            Mat [lastPos.first][lastPos.second] = KPoint;
+                        }
+                        returnValue = true;
                     }
-                    return true;
-                    break;
                 } else {
-                    return false;
-                    break;
+                    returnValue = false;
                 }
+                break;
 
             case MOVEHONRIZONTAL://horizontal direction
                 cout << "Try horizontal mouvement" << endl;
                 if (Pos.second > Posplayer1.second ) { //left
                     cout << "Ghost want to move left" << endl;
                     success = moveLeft(Mat, car, Pos);
-                    if (success && pointOnPos) {
-                        Mat [Pos.first][Pos.second] = KPoint;
+                    if (movement.success) {
+                        if (movement.pointOnPos) {
+                            Mat [lastPos.first][lastPos.second] = KPoint;
+                        }
+                        returnValue = true;
                     }
-                    return true;
-                    break;
                 }
                 else if (Pos.second < Posplayer1.first ) { //right
                     cout << "Ghost want to move right" << endl;
                     success = moveRight(Mat, car, Pos);
-                    if (success && pointOnPos) {
-                        Mat [Pos.first][Pos.second] = KPoint;
+                    if (movement.success) {
+                        if (movement.pointOnPos) {
+                            Mat [lastPos.first][lastPos.second] = KPoint;
+                        }
+                        returnValue = true;
                     }
-                    return true;
-                    break;
                 } else {
-                    return false;
-                    break;
+                    returnValue = false;
                 }
+                break;
             }
             Mat [Pos.first][Pos.second] = car;
-            return 0;
+            return returnValue;
         }
 
 }
