@@ -49,7 +49,6 @@ int game(const unsigned & cptMax, MapSettings mapSettings) { //game depends of t
     unsigned TurnGhost; //Declare the variable of the number ghost's position
 
     CMat Mat;
-    char car;
     char nextMove;
     bool Victory (false);
 
