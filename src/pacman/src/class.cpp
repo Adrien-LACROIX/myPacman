@@ -162,3 +162,27 @@ class Ghost {
         }
 
 }
+
+class EasterEggs {
+    public :
+        CPosition egg1;
+        CPosition egg2;
+        CPosition egg3;
+        CPosition egg4;
+        CPosition egg5;
+}
+
+class MapSettings {
+    private :
+        CPosition player;
+        CPosition ghost1;
+        CPosition ghost2;
+        CPosition ghost3;
+        CPosition ghost4;
+        CPosition finish;
+        EasterEggs eggs;
+
+    public :
+        unsigned lignes, columns;
+        string  linkMap;
+}

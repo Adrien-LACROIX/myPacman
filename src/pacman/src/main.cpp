@@ -19,7 +19,8 @@
 #include <vector>
 #include "src/pacman/headers/Doc_Prof/type.h"
 #include "src/pacman/headers/models.h"
-#include "src/pacman/src/map.cpp"
+#include "src/pacman/src/menu.cpp"
+#include "src/pacman/src/matrix.cpp"
 #include "src/pacman/src/move.cpp"
 #include "src/pacman/src/EasterEggs.cpp"
 #include "src/pacman/src/game.cpp"
@@ -43,11 +44,7 @@ bool escape () {
  * @brief game move the player and ghost bots, set the victory condition
  * @return 0
  */
-int game(const unsigned & cptMax) { //game depends of the player's point's number max and of the player point's number
-
-    //declare the lines and columns depending of MapY and MapX
-    unsigned KLines (MapY);
-    unsigned KColumns (MapX);
+int game(const unsigned & cptMax, MapSettings mapSettings) { //game depends of the player's point's number max and of the player point's number
     unsigned TurnNum (1); //declare and set the player's turn at 1
     unsigned TurnGhost; //Declare the variable of the number ghost's position
 
@@ -71,8 +68,7 @@ int game(const unsigned & cptMax) { //game depends of the player's point's numbe
     ghost3.car = V;
     ghost4.car = B;
 
-    InitMat (Mat, KLines, KColumns, player.Pos, ghost1.Pos, ghost2.Pos, ghost3.Pos, ghost4.Pos, PosEasterEgg1, PosEasterEgg2, PosEasterEgg3, PosEasterEgg4, PosEasterEgg5, PosFinish) ; //Run the matrix's initialization fuction
-
+    InitMat (Mat, mapSettings)
     ShowMatrix (Mat); //Run the matrix's print function
 
     if (choice == '4') { //if the labyrinth mode is choose
@@ -232,15 +228,15 @@ int game(const unsigned & cptMax) { //game depends of the player's point's numbe
  * @brief main run Menu, ChoiceMenu and game
  * @return game
  */
-int main()
-{
+int main() {
+    MapSettings mapSettings;
     Menu(); //run the menu's function
-    ChoiceMenu(); //run the  menu's choice function
-    game(cptMax);//run the game's function
+    mapSettings = ChoiceMenu(); //run the  menu's choice function
+    game(cptMax, mapSettings);//run the game's function
     while (!escape()){
         Menu(); //run the menu's function
-        ChoiceMenu(); //run the  menu's choice function
-        game(cptMax);//run the game's function
+        mapSettings = ChoiceMenu(); //run the  menu's choice function
+        game(cptMax, mapSettings);//run the game's function
     }
     return 0;
 }
