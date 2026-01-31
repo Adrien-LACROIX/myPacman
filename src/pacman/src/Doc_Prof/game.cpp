@@ -18,16 +18,8 @@ void MoveToken (CMat & Mat, const char & Move, CPosition & Pos)
     Mat [Pos.first][Pos.second] = KEmpty;
     switch (Move)
     {
-    case 'A':
-        -- Pos.first;
-        -- Pos.second;
-        break;
     case 'Z':
         --Pos.first;
-        break;
-    case 'E':
-        --Pos.first;
-        ++Pos.second;
         break;
     case 'Q':
         --Pos.second;
@@ -35,16 +27,8 @@ void MoveToken (CMat & Mat, const char & Move, CPosition & Pos)
     case 'D':
         ++Pos.second;
         break;
-    case 'W':
+    case 'S':
         ++Pos.first;
-        --Pos.second;
-        break;
-    case 'X':
-        ++Pos.first;
-        break;
-    case 'C':
-        ++Pos.first;
-        ++Pos.second;
         break;
     }
     Mat [Pos.first][Pos.second] = car;
