@@ -5,8 +5,9 @@
  * \brief Definition of usefull types or aliases for the project
  * \author Alain Casali
  * \author Marc Laporte
- * \version 1.0
- * \date 18 décembre 2018
+ * \author Adrien Lacroix
+ * \version 1.1
+ * \date 1st February 2026
  */
 
 #include <string>

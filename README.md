@@ -11,25 +11,28 @@ PCM-[number of yout branch]
 
 
 
-**Actual Version : 1.2.1**
-
+**Actual Version : 2.0.0**
 
 
 **Roadmap:**
 
-Version 1.3.1:
+Version 2.2.0:
 - Valid the action without tap enter
 
-Version 1.3.0:
+Version 2.1.0:
 - Add possibility to change keys configuration
 
-Version 1.2.3:
+Version 2.0.2:
 - Fix bug when player enter in a false wall in order to take an easterEgg
 
-Version 1.2.2:
+Version 2.0.1:
 - Fix bot's bugs
 
 **Pacthnotes:**
+
+Version 2.0.0:
+- Re-architecting of the project
+- Using classes for player and ghosts gestion
 
 Version 1.2.1:
 - Fix bug on the bot mouvement

@@ -6,8 +6,8 @@
  * \author Oussama Talbi
  * \author Thomas Celeschi
  * \author Julian Cayuela
- * \version 1.1
- * \date 4 mai 2018
+ * \version 1.2
+ * \date 1st February 2026
  */
 
 #ifndef COLORANDMODELS_H
@@ -16,8 +16,9 @@
 #pragma once
 
 #include <iostream>
+using namespace std;
 #include <string>
-#include "src/pacman/headers/Doc_Prof/type.h"
+#include "include/type.h"
 #define models(condition) models(condition, #condition, __FILE__, __LINE__, __func__);
 
 const char Pacman = 'O';
@@ -37,34 +38,6 @@ const char EasterEgg3 = 'T';
 const char EasterEgg4 = 'S';
 const char EasterEgg5 = 'J';
 const char Finish = 'A';
-
-
-unsigned PosStartG1Y;    // coordonate Y of the start position of the Ghost
-unsigned PosStartG1X;
-unsigned PosStartG2Y;    // coordonate Y of the start position of the Ghost
-unsigned PosStartG2X;
-unsigned PosStartG3Y;    // coordonate Y of the start position of the Ghost
-unsigned PosStartG3X;
-unsigned PosStartG4Y;    // coordonate Y of the start position of the Ghost
-unsigned PosStartG4X;    // coordonate X of the start position of the Ghost
-unsigned PosStartPY;
-unsigned PosStartPX;
-unsigned PosEasterEgg1Y;
-unsigned PosEasterEgg1X;
-unsigned PosEasterEgg2Y;
-unsigned PosEasterEgg2X;
-unsigned PosEasterEgg3Y;
-unsigned PosEasterEgg3X;
-unsigned PosEasterEgg4Y;
-unsigned PosEasterEgg4X;
-unsigned PosEasterEgg5Y;
-unsigned PosEasterEgg5X;
-unsigned PosFinishY;
-unsigned PosFinishX;
-
-// map setting declard
-unsigned MapY ;         // declared string for size of matrix
-unsigned MapX ;         // declared string for size of matrix
 
 using namespace std;
 
@@ -92,8 +65,7 @@ const string BWhite   {"47"};
  * @brief Colors use the permission to print colors in the terminal
  * @param coul
  */
-void Colors (const string & coul)
-{
+void Colors (const string & coul) {
     cout << "\033[" << coul <<"m";
 }
 
