@@ -2,13 +2,14 @@
  * \file EasterEggs.cpp
  * \make all easter eggs
  * \author Adrien Lacroix
- * \version 1.0
- * \date 4 mai 2021
+ * \version 1.1
+ * \date 1st February 2026
  */
+
 #include <iostream>
 #include <vector>
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
+#include "include/type.h"
+#include "include/models.h"
 using namespace std;
 
 /**

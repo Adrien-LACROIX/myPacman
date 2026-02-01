@@ -11,8 +11,8 @@
  * \date 31th January 2026
  */
 
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
+#include "include/type.h"
+#include "include/models.h"
 
 using namespace std;
 

@@ -23,9 +23,9 @@
 #include <ctime> // pour avoir le time() [pas sûr que ce soit obligatoire]
 #include <cstdlib> // pour avoir le rand()
 
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
-#include "src/pacman/src/class.cpp"
+#include "include/type.h"
+#include "include/models.h"
+#include "src/classes.cpp"
 
 
 using namespace std;
@@ -51,8 +51,7 @@ void Clear_Screen () {
  * @param PosPlayer5
  * @param PosFinish
  */
-void InitMat (CMat & Mat, MapSettings & mapSettings)
-{
+void InitMat (CMat & Mat, MapSettings & mapSettings) {
     unsigned y = 0; //declare and set y at 0
     unsigned x = 0; //declare and set x at 0
     Mat.resize (mapSettings.lignes); //set the matrix 's size at the number of lines
@@ -147,7 +146,6 @@ void ShowMatrix(const CMat & Mat) {
     cout << '|';
     //File_Flow();
     for (char c : Mat[i]) {
-
         //Color the game
         Colors(BBlack);
         switch (c) {

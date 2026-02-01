@@ -23,10 +23,10 @@
 #include <ctime> // pour avoir le time() [pas sûr que ce soit obligatoire]
 #include <cstdlib> // pour avoir le rand()
 
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
-#include "src/pacman/src/class.cpp"
-#include "src/pacman/src/matrix.cpp"
+#include "include/type.h"
+#include "include/models.h"
+#include "src/classes.cpp"
+#include "src/matrix.cpp"
 
 
 using namespace std;
@@ -59,7 +59,7 @@ MapSettings Random() {
     switch (mapchoice)
     {
         case 1 :
-            mapSettings.linkMap = "map4"; //Link of the map file
+            mapSettings.linkMap = "map4.txt"; //Link of the map file
             mapSettings.lignes = 21;       // map's size
             mapSettings.columns = 30;       // map's size
 
@@ -71,7 +71,7 @@ MapSettings Random() {
             break;
 
         case 2 :
-            mapSettings.linkMap = "map5"; //Link of the map file
+            mapSettings.linkMap = "map5.txt"; //Link of the map file
             mapSettings.lignes = 37;       //map's size
             mapSettings.columns = 34;        //map's size
 
@@ -83,7 +83,7 @@ MapSettings Random() {
             break ;
 
         case 3 :
-            mapSettings.linkMap = "map6"; //Link of the map file
+            mapSettings.linkMap = "map6.txt"; //Link of the map file
             mapSettings.lignes = 46;       // map's size
             mapSettings.columns = 58;       // map's size
 
@@ -108,7 +108,7 @@ MapSettings ChoiceMenu(){
     switch(choice)
     {
     case '1':
-        mapSettings.linkMap = "map1"; //Link of the map file
+        mapSettings.linkMap = "map1.txt"; //Link of the map file
         mapSettings.lignes = 15;       // map's size
         mapSettings.columns = 21;       // map's size
 
@@ -130,7 +130,7 @@ MapSettings ChoiceMenu(){
         break;
 
     case '2':
-        mapSettings.linkMap = "map2"; //Link of the map file
+        mapSettings.linkMap = "map2.txt"; //Link of the map file
         mapSettings.lignes = 28;       // map's size
         mapSettings.columns = 31;       // map's size
 
@@ -167,7 +167,7 @@ MapSettings ChoiceMenu(){
         break;
 
     case '3':
-        mapSettings.linkMap = "map3"; //Link of the map file
+        mapSettings.linkMap = "map3.txt"; //Link of the map file
         mapSettings.lignes = 31;       // map's size
         mapSettings.columns = 28;       // map's size
 

@@ -17,14 +17,15 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
-#include "src/pacman/src/menu.cpp"
-#include "src/pacman/src/matrix.cpp"
-#include "src/pacman/src/move.cpp"
-#include "src/pacman/src/EasterEggs.cpp"
-#include "src/pacman/src/game.cpp"
-#include "src/pacman/src/class.cpp"
+
+#include "include/type.h"
+#include "include/models.h"
+#include "src/menu.cpp"
+#include "src/matrix.cpp"
+#include "src/move.cpp"
+#include "src/easterEggs.cpp"
+#include "src/game.cpp"
+#include "src/classes.cpp"
 
 using namespace std;
 
@@ -61,11 +62,11 @@ int game(const unsigned & cptMax, MapSettings mapSettings) { //game depends of t
     Ghost ghost3;
     Ghost ghost4;
 
-    player.car = 0;
-    ghost1.car = X;
-    ghost2.car = C;
-    ghost3.car = V;
-    ghost4.car = B;
+    player.car = Pacman;
+    ghost1.car = Ghost1;
+    ghost2.car = Ghost2;
+    ghost3.car = Ghost3;
+    ghost4.car = Ghost4;
 
     InitMat (Mat, mapSettings)
     ShowMatrix (Mat); //Run the matrix's print function

@@ -3,12 +3,12 @@
  * \define all classes
  * \author Adrien Lacroix
  * \version 1.1
- * \date 31th January 2026
+ * \date 1st February 2026
  */
 
-#include "src/pacman/headers/Doc_Prof/type.h"
-#include "src/pacman/headers/models.h"
-#include "src/pacman/src/move.cpp"
+#include "include/type.h"
+#include "include/models.h"
+#include "src/move.cpp"
 
 
 class Player {
